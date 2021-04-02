@@ -105,10 +105,10 @@ def trade():
 # "buy_currency", "sell_currency", "buy_amount", "sell_amount", “signature”).
 @app.route('/order_book')
 def order_book():
-    orders = session.query(Order).all()
-    list_orders = []
+    orders = g.session query to get all entries
+    create order_list list []
     for order in orders:
-        obj = {
+        list_add = {
             "sender_pk": order.sender_pk, 
             "receiver_pk": order.receier_pk, 
             "buy_currency": order.buy_currency, 
@@ -116,17 +116,7 @@ def order_book():
             "buy_amount": order.buy_amount, 
             "sell_amount": order.sell_amount, 
             "signature": order.signature }
-        list_orders.add(order)
-
-
-    #/order_book should return a json object with the following schema:
-    #{
-    #'data': [<your list of orders here>]
-    #}
-    result = {
-        "data": list_orders_d 
-    }
-
+        list_orders.add(list_add)
 
     return jsonify(list_orders)
 
