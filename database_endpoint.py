@@ -105,8 +105,8 @@ def trade():
 # "buy_currency", "sell_currency", "buy_amount", "sell_amount", “signature”).
 @app.route('/order_book')
 def order_book():
-
-    orders = g.session query to get all entries
+    orders = session.query(Order).all()
+    #orders = g.session query to get all entries
     list_orders = []
     for order in orders:
         obj = {
