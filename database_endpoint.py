@@ -33,7 +33,7 @@ def shutdown_session(response_or_exc):
 #Instead, insert a record into the “Log” table, with the message field set to be json.dumps(payload).
 def log_message(d):
     time = datetime.now()
-    log = Log(logtime=time, message=d))
+    log = Log(logtime=time, message=d)
     session.add(log)
     session.commit()
     pass
@@ -106,7 +106,7 @@ def trade():
 @app.route('/order_book')
 def order_book():
     orders = session.query(Order).all()
-    list_orders = new List<Order>()
+    list_orders = []
     for order in orders:
         obj = {
             "sender_pk": order.sender_pk, 
