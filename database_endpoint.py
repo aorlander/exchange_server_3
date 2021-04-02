@@ -128,7 +128,7 @@ def order_book():
     }
 
 
-    return jsonify(result)
+    return jsonify(list_orders)
 
 if __name__ == '__main__':
     app.run(port='5002')
