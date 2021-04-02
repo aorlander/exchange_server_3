@@ -116,8 +116,11 @@ def order_book():
         list_orders.add(o)
 
     result = {
-        "data": list_orders
-    }
+        "data": 
+            {
+            list_orders
+            }
+    }   
     return jsonify(result)
 
 if __name__ == '__main__':
