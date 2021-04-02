@@ -79,7 +79,7 @@ def trade():
         platform = content['payload']['platform']
         sig = content['sig']
         payload = json.dumps(content['payload'])
-        response = False
+        response = True
         if platform=='Ethereum':
             eth_encoded_msg = eth_account.messages.encode_defunct(text=payload)
             if eth_account.Account.recover_message(eth_encoded_msg,signature=sig) == s_pk:
@@ -97,7 +97,7 @@ def trade():
         #Instead, insert a record into the “Log” table, with the message field set to be json.dumps(payload).
         if response == False:
             leg_message(payload)
-
+        
         return jsonify(True)
 
 #Return a list of all orders in the database. The response should be a list of orders formatted as JSON. 
@@ -115,13 +115,7 @@ def order_book():
             "signature": order.signature}
         list_orders.add(o)
 
-    result = {
-        "data": 
-            {
-            list_orders
-            }
-    }   
-    return jsonify(result)
+    return jsonify(data=list_orders)
 
 if __name__ == '__main__':
     app.run(port='5002')
