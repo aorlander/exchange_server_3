@@ -34,8 +34,8 @@ def shutdown_session(response_or_exc):
 def log_message(d):
     time = datetime.now()
     log = Log(logtime=time, message=d)
-    session.add(log)
-    session.commit()
+    g.session.add(log)
+    g.session.commit()
     pass
 
 """
@@ -58,7 +58,7 @@ def trade():
                 print( json.dumps(content) )
                 log_message(content)
                 return jsonify( False )
-        
+
         error = False
         for column in columns:
             if not column in content['payload'].keys():
@@ -79,6 +79,7 @@ def trade():
         platform = content['payload']['platform']
         sig = content['sig']
         payload = json.dumps(content['payload'])
+        
         response = True
         if platform=='Ethereum':
             eth_encoded_msg = eth_account.messages.encode_defunct(text=payload)
@@ -91,30 +92,28 @@ def trade():
         #If the signature verifies, all of the fields under the ‘payload’ key should be stored in the “Order” table EXCEPT for 'platform’.
         if response == True:
             order = Order( sender_pk=s_pk, receiver_pk=r_pk, buy_currency=buy_ccy, sell_currency=sell_ccy, buy_amount=buy_amt, sell_amount=sell_amt)
-            session.add(order)
-            session.commit()
+            g.session.add(order)
+            g.session.commit()
         #If the signature does not verify, do not insert the order into the “Order” table. 
         #Instead, insert a record into the “Log” table, with the message field set to be json.dumps(payload).
         if response == False:
             leg_message(payload)
         
-        response = True
-        return jsonify(response)
+        return jsonify(True)
 
 #Return a list of all orders in the database. The response should be a list of orders formatted as JSON. 
 # Each order should be a dict with (at least) the following fields ("sender_pk", "receiver_pk", 
 # "buy_currency", "sell_currency", "buy_amount", "sell_amount", “signature”).
 @app.route('/order_book')
 def order_book():
-    orders = session.query(Order).all()
-    #orders = g.session query to get all entries
+    orders = g.session.query(Order).all()
     list_orders = []
     for order in orders:
-        o = {"sender_pk": order.sender_pk, "receiver_pk": order.receier_pk, 
+        o = {"sender_pk": order.sender_pk, "receiver_pk": order.receiver_pk, 
             "buy_currency": order.buy_currency, "sell_currency": order.sell_currency, 
             "buy_amount": order.buy_amount, "sell_amount": order.sell_amount, 
             "signature": order.signature}
-        list_orders.add(o)
+        list_orders.append(o)
 
     return jsonify(data=list_orders)
 
