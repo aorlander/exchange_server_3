@@ -108,7 +108,7 @@ def trade():
 @app.route('/order_book')
 def order_book():
     orders = session.query(Order).all()
-    result = []
+    list_orders = []
     for order in orders:
         obj = {
             "sender_pk": order.sender_pk, 
@@ -119,7 +119,17 @@ def order_book():
             "sell_amount": order.sell_amount, 
             "signature": order.signature }
         json_obj = json.dumps(obj)
-        result.add(json_obj)
+        list_orders.add(json_obj)
+
+ 
+    result = {
+        "data": list_orders 
+    }
+    #/order_book should return a json object with the following schema:
+    #{
+    #'data': [<your list of orders here>]
+    #}
+
     return jsonify(result)
 
 if __name__ == '__main__':
