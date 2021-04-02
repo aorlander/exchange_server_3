@@ -118,12 +118,13 @@ def order_book():
             "signature": order.signature }
         list_orders.add(obj)
 
+    list_orders_d = json.dumps(list_orders)
     #/order_book should return a json object with the following schema:
     #{
     #'data': [<your list of orders here>]
     #}
     result = {
-        "data": list_orders 
+        "data": list_orders_d 
     }
 
 
