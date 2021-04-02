@@ -30,8 +30,8 @@ def shutdown_session(response_or_exc):
 -------- Helper methods (feel free to add your own!) -------
 """
 
-def log_message(d)
-    # Takes input dictionary d and writes it to the Log table
+def log_message(d):
+    print(d)
     pass
 
 """
@@ -70,6 +70,7 @@ def trade():
 def order_book():
     #Your code here
     #Note that you can access the database session using g.session
+    result = 0
     return jsonify(result)
 
 if __name__ == '__main__':
