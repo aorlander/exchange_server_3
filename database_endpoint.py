@@ -116,8 +116,7 @@ def order_book():
             "buy_amount": order.buy_amount, 
             "sell_amount": order.sell_amount, 
             "signature": order.signature }
-        json_obj = json.dumps(obj)
-        list_orders.add(json_obj)
+        list_orders.add(obj)
 
     #/order_book should return a json object with the following schema:
     #{
@@ -126,6 +125,7 @@ def order_book():
     result = {
         "data": list_orders 
     }
+
 
     return jsonify(result)
 
