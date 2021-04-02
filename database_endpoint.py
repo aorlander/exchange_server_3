@@ -119,8 +119,9 @@ def order_book():
             "signature": order.signature }
         list_orders.add(o)
 
+    d = json.dumps(list_orders)
     result = {
-        "data": list_orders
+        "data": d
     }
     return jsonify(result)
 
