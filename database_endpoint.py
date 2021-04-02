@@ -69,7 +69,6 @@ def trade():
             log_message(content)
             return jsonify( False )
         
-        #Your code here
         #check whether “sig” is a valid signature of json.dumps(payload), using the signature algorithm specified by the platform field
         s_pk = content['payload']['sender_pk'] 
         r_pk = content['payload']['receiver_pk'] 
@@ -99,9 +98,7 @@ def trade():
         if response == False:
             leg_message(payload)
 
-        return 0
-
-
+        return jsonify(result)
 
 #Return a list of all orders in the database. The response should be a list of orders formatted as JSON. 
 # Each order should be a dict with (at least) the following fields ("sender_pk", "receiver_pk", 
@@ -122,14 +119,13 @@ def order_book():
         json_obj = json.dumps(obj)
         list_orders.add(json_obj)
 
- 
-    result = {
-        "data": list_orders 
-    }
     #/order_book should return a json object with the following schema:
     #{
     #'data': [<your list of orders here>]
     #}
+    result = {
+        "data": list_orders 
+    }
 
     return jsonify(result)
 
