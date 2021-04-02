@@ -119,17 +119,10 @@ def order_book():
             "signature": order.signature }
         list_orders.add(order)
 
-    
-    #/order_book should return a json object with the following schema:
-    #{
-    #'data': [<your list of orders here>]
-    #}
     result = {
         "data": list_orders_d 
     }
-
-
-    return jsonify(list_orders)
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(port='5002')
