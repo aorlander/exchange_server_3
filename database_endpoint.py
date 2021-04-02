@@ -109,19 +109,14 @@ def order_book():
     #orders = g.session query to get all entries
     list_orders = []
     for order in orders:
-        o = {
-            "sender_pk": order.sender_pk, 
-            "receiver_pk": order.receier_pk, 
-            "buy_currency": order.buy_currency, 
-            "sell_currency": order.sell_currency, 
-            "buy_amount": order.buy_amount, 
-            "sell_amount": order.sell_amount, 
-            "signature": order.signature }
+        o = {"sender_pk": order.sender_pk, "receiver_pk": order.receier_pk, 
+            "buy_currency": order.buy_currency, "sell_currency": order.sell_currency, 
+            "buy_amount": order.buy_amount, "sell_amount": order.sell_amount, 
+            "signature": order.signature}
         list_orders.add(o)
 
-    d = json.dumps(list_orders)
     result = {
-        "data": d
+        "data": list_orders
     }
     return jsonify(result)
 
