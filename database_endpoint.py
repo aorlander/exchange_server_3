@@ -98,7 +98,8 @@ def trade():
         if response == False:
             leg_message(payload)
         
-        return jsonify(True)
+        response = True
+        return jsonify(response)
 
 #Return a list of all orders in the database. The response should be a list of orders formatted as JSON. 
 # Each order should be a dict with (at least) the following fields ("sender_pk", "receiver_pk", 
