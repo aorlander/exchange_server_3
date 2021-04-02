@@ -70,6 +70,7 @@ def trade():
             return jsonify( False )
         
         #Your code here
+        #check whether “sig” is a valid signature of json.dumps(payload), using the signature algorithm specified by the platform field
         s_pk = content['payload']['sender_pk'] 
         r_pk = content['payload']['receiver_pk'] 
         buy_ccy = content['payload']['buy_currency'] 
@@ -82,10 +83,10 @@ def trade():
         response = False
         if platform=='Ethereum':
             eth_encoded_msg = eth_account.messages.encode_defunct(text=payload)
-            if eth_account.Account.recover_message(eth_encoded_msg,signature=sig) == pk:
+            if eth_account.Account.recover_message(eth_encoded_msg,signature=sig) == s_pk:
                 response = True
         if platform=='Algorand':
-            if algosdk.util.verify_bytes(payload.encode('utf-8'),sig,pk):
+            if algosdk.util.verify_bytes(payload.encode('utf-8'),sig,s_pk):
                 response = True
 
         #If the signature verifies, all of the fields under the ‘payload’ key should be stored in the “Order” table EXCEPT for 'platform’.
